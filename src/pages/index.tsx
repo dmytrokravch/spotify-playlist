@@ -1,28 +1,42 @@
-// import { useRouter } from 'next/router';
-
-import { Meta } from '@/layouts/Meta';
-import { Main } from '@/templates/Main';
+import { useRouter } from 'next/router';
+import { signOut, useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 
 const Index = () => {
-  // const router = useRouter();
+  const { data: session } = useSession();
+  const router = useRouter();
+  useEffect(() => {
+    if (!session) {
+      router.replace('/login');
+    }
+  }, [router, session]);
 
-  return (
-    <Main
-      meta={
-        <Meta
-          title="Next.js Boilerplate"
-          description="Next js Boilerplate Description"
-        />
-      }
-    >
-      <h1 className="text-2xl font-bold">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione fuga
-        recusandae quidem. Quaerat molestiae blanditiis doloremque possimus
-        labore voluptatibus distinctio recusandae autem esse explicabo molestias
-        officia placeat, accusamus aut saepe.
-      </h1>
-    </Main>
-  );
+  const userMail = session?.user?.email;
+  const [list, setList] = useState([]);
+
+  const getMyPlaylists = async () => {
+    const res = await fetch('/api/spotify/get_playlist');
+    const { items } = await res.json();
+    setList(items);
+  };
+
+  if (session) {
+    return (
+      <>
+        Signed in as {userMail} <br />
+        <button onClick={() => signOut()}>Sign out</button>
+        <hr />
+        <button onClick={() => getMyPlaylists()}>Get all my playlists</button>
+        {list.map((item: any) => (
+          <div key={item.id}>
+            <h1>{item.name}</h1>
+            {/* <img src={item.images[0]?.url} width="100" /> */}
+          </div>
+        ))}
+      </>
+    );
+  }
+  return <></>;
 };
 
 export default Index;
