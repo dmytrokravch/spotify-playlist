@@ -15,7 +15,7 @@ const Index = () => {
   const [list, setList] = useState([]);
 
   const getMyPlaylists = async () => {
-    const res = await fetch('/api/spotify/get_playlist');
+    const res = await fetch('/api/spotify/playlist/get');
     const { items } = await res.json();
     setList(items);
   };
@@ -27,12 +27,13 @@ const Index = () => {
         <button onClick={() => signOut()}>Sign out</button>
         <hr />
         <button onClick={() => getMyPlaylists()}>Get all my playlists</button>
-        {list.map((item: any) => (
-          <div key={item.id}>
-            <h1>{item.name}</h1>
-            {/* <img src={item.images[0]?.url} width="100" /> */}
-          </div>
-        ))}
+        {list &&
+          list.map((item: any) => (
+            <div key={item.id}>
+              <h1>{item.name}</h1>
+              <img src={item.images[0]?.url} width="100" />
+            </div>
+          ))}
       </>
     );
   }
