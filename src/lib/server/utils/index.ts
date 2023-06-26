@@ -1,1 +1,1 @@
-export * from './fetchSpotifyTokenApi';
+export * from './customFetch';

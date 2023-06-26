@@ -1,6 +1,6 @@
 import type { ErrorData, FetchApiResult } from '../../../../types';
 
-export async function fetchSpotifyTokenApi<T = unknown>(
+export async function customFetch<T = unknown>(
   url: string,
   fetchOptions?: RequestInit
 ): Promise<FetchApiResult<T>> {

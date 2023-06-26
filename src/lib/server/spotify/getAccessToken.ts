@@ -1,6 +1,6 @@
 import type { FetchApiResult, GetAccessTokenResonse } from 'types';
 
-import { fetchSpotifyTokenApi } from '../utils';
+import { customFetch } from '../utils';
 
 const { TOKEN_ENDPOINT } = process.env;
 const TOKEN_URL = '/api/token';
@@ -43,7 +43,7 @@ export async function getAccessToken({
     'Content-Type': 'application/x-www-form-urlencoded',
   });
   const url = `${TOKEN_ENDPOINT}${TOKEN_URL}`;
-  return fetchSpotifyTokenApi<GetAccessTokenResonse>(url, {
+  return customFetch<GetAccessTokenResonse>(url, {
     method: 'POST',
     body: payload,
     headers,

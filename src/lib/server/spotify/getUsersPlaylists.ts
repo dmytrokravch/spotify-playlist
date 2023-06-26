@@ -1,4 +1,4 @@
-import { fetchSpotifyTokenApi } from '../utils';
+import { customFetch } from '../utils';
 
 const { PLAYLISTS_ENDPOINT } = process.env;
 const PLAYLISTS_URL = '/v1/me/playlists';
@@ -8,7 +8,7 @@ interface Props {
 
 export async function getUsersPlaylists({ refreshToken }: Props) {
   const url = `${PLAYLISTS_ENDPOINT}${PLAYLISTS_URL}`;
-  return fetchSpotifyTokenApi<any>(url, {
+  return customFetch<any>(url, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${refreshToken}`,
