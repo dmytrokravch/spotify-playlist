@@ -11,11 +11,17 @@ export type ErrorData = {
 };
 
 export type FetchApiResult<T = unknown> =
-  | {
-      data: T;
-      error?: never;
-    }
-  | {
-      error: ErrorData;
-      data?: never;
-    };
+  | { type: 'success'; data: T }
+  | { type: 'error'; error: ErrorData };
+
+export function isSuccessResult<T>(
+  result: FetchApiResult<T>
+): result is { type: 'success'; data: T } {
+  return result.type === 'success';
+}
+
+export function isErrorResult<T>(
+  result: FetchApiResult<T>
+): result is { type: 'error'; error: ErrorData } {
+  return result.type === 'error';
+}

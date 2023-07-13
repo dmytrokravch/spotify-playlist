@@ -16,6 +16,7 @@ export async function getAccessToken({
 }: Props): Promise<FetchApiResult<GetAccessTokenResonse>> {
   if (!clientSecret) {
     return {
+      type: 'error',
       error: {
         code: 403,
         message: 'No API key supplied',
@@ -26,6 +27,7 @@ export async function getAccessToken({
   }
   if (!clientId) {
     return {
+      type: 'error',
       error: {
         code: 403,
         message: 'No API key supplied',

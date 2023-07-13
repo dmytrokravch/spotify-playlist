@@ -19,10 +19,10 @@ export async function customFetch<T = unknown>(
             suggestion: 'Please try again',
           };
 
-      return { error };
+      return { type: 'error', error };
     }
 
-    return { data: body };
+    return { type: 'success', data: body };
   } catch (err: unknown) {
     const error: ErrorData =
       err instanceof Error
@@ -32,6 +32,6 @@ export async function customFetch<T = unknown>(
             message: `Error when calling ${url}`,
             suggestion: 'Please try again',
           };
-    return { error };
+    return { type: 'error', error };
   }
 }
